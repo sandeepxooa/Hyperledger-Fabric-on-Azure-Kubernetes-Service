@@ -13,7 +13,7 @@
     "containers": [
       {
         "name": "fabric-tools",
-        "image": "fabricToolsImageWithTag",
+        "image": "ghcr.io/xooa/fabrictools:2.2",
         "command": [
           "/bin/bash"
         ],

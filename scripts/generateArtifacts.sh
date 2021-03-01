@@ -4,10 +4,10 @@ rootFolder="$(dirname `pwd`)"
 dockerfileLocation="fabricTools/fabricTools.dockerfile"
 pushd $rootFolder
 docker build . -f ${dockerfileLocation} -t $1 \
-    --build-arg GO_VERSION=1.13.12 \
-    --build-arg ALPINE_VERSION=3.12 \
+    --build-arg GO_VERSION=1.14 \
+    --build-arg ALPINE_VERSION=3.13 \
     --build-arg FABRIC_VERSION=2.3.1 \
-    --build-arg FABRIC_CA_VERSION=2.3.1
+    --build-arg FABRIC_CA_VERSION=1.4.9
 popd
 
 artifactsFolder=${rootFolder}/${artifactsFolder}
@@ -34,7 +34,7 @@ nodeJsArchivePath="${artifactsFolder}/artifacts/funcNodeJS.zip"
 pushd $funcNodeJSFolder
 podJsonLocation=aksManifests/fabricTools/pod.json
 cp $podJsonLocation "${podJsonLocation}_backup"
-sed -i 's|fabricToolsImageWithTag|'"$1"'|g' $podJsonLocation
+gsed -i 's|fabricToolsImageWithTag|'"$1"'|g' $podJsonLocation
 npm ci
 zip -r $nodeJsArchivePath *
 mv "${podJsonLocation}_backup" $podJsonLocation

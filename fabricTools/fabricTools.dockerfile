@@ -26,11 +26,11 @@ RUN git clone https://github.com/hyperledger/fabric-ca.git --branch v${FABRIC_CA
 
 FROM golang as hlf-builder
 
+ARG GO_TAGS
+
 RUN cd $GOPATH/src/github.com/hyperledger/fabric \
-    && make configtxgen configtxlator cryptogen discover idemixgen peer orderer \
-	&& make .build/sampleconfig.tar.bz2 \
-	&& mkdir -p /sampleconfig \
-	&& tar -xf .build/sampleconfig.tar.bz2 -C /sampleconfig
+    && make configtxgen configtxlator cryptogen peer discover osnadmin idemixgen GO_TAGS=${GO_TAGS}
+
 
 RUN cd $GOPATH/src/github.com/hyperledger/fabric-ca \
     && make fabric-ca-client
@@ -39,8 +39,13 @@ RUN cd $GOPATH/src/github.com/hyperledger/fabric-ca \
 
 FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION}
 
-RUN apk update \
-    && apk add --no-cache curl wget libc6-compat bash
+
+RUN apk add --no-cache \
+	bash \
+	git \
+	jq \
+	tzdata curl wget libc6-compat;
+
 
 ARG GIT_COMMIT=unspecified
 LABEL git_commit=$GIT_COMMIT
@@ -48,14 +53,13 @@ LABEL git_commit=$GIT_COMMIT
 # Copy HLF dependecies from previous layer
 ENV GOPATH /go
 ARG FABRIC_PATH=$GOPATH/src/github.com/hyperledger
-    # fabric-ca
+
+ENV FABRIC_CFG_PATH /etc/hyperledger/fabric
+
+VOLUME /etc/hyperledger/fabric
+COPY --from=hlf-builder /go/src/github.com/hyperledger/fabric/build/bin /usr/local/bin
+COPY --from=hlf-builder /go/src/github.com/hyperledger/fabric/sampleconfig ${FABRIC_CFG_PATH}
 COPY --from=hlf-builder $FABRIC_PATH/fabric-ca/bin/fabric-ca-client /usr/local/bin
-    # hlf native binaries (peer, orderer, configtxgen, configtxlator, cryptogen, discover, idemixgen)
-COPY --from=hlf-builder $FABRIC_PATH/fabric/.build/bin/* /usr/local/bin/
-    # hlf node/channel sample config
-RUN mkdir -p /usr/local/config
-COPY --from=hlf-builder /sampleconfig /usr/local/config
-ENV FABRIC_CFG_PATH /usr/local/config
 
 # Kubernetes client
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.5/bin/linux/amd64/kubectl

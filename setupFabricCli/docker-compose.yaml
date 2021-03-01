@@ -1,17 +1,17 @@
-version: '2'
+version: "2"
 
 services:
-   fabricCLI:
-     container_name: fabricCLI
-     image: hyperledger/fabric-tools:1.4.8
-     tty: true
-     stdin_open: true
-     environment:
-       - GOPATH=/var/hyperledger
-       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-     working_dir: /var/hyperledger
-     command: /bin/bash
-     volumes:
-         - /var/run/:/host/var/run/
-         - ./chaincode:/var/hyperledger/src/chaincode
-         - ./profiles:/var/hyperledger/profiles
+  fabricCLI:
+    container_name: fabricCLI
+    image: hyperledger/fabric-tools:2.3.1
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/var/hyperledger
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+    working_dir: /var/hyperledger
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./chaincode:/var/hyperledger/src/chaincode
+      - ./profiles:/var/hyperledger/profiles

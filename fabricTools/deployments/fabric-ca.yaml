@@ -46,7 +46,7 @@ spec:
           secretName: pg-ssl-rootcert
      containers:
        - name: ca
-         image: hyperledger/fabric-ca:1.4.8
+         image: hyperledger/fabric-ca:2.3.1
          imagePullPolicy: Always
          env: 
          - name:  FABRIC_CA_HOME

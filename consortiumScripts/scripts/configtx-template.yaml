@@ -41,14 +41,15 @@ Capabilities:
         # prior releases.
         # Prior to enabling V1.4.3 channel capabilities, ensure that all
         # orderers and peers on a channel are at v1.4.3 or later.
-        V1_4_3: true
+        V2_0: true
+        
     # Application capabilities apply only to the peer network, and may be safely
     # used with prior release orderers.
     # Set the value of the capability to true to require it.
     Application: &ApplicationCapabilities
         # V1.4.2 for Application enables the new non-backwards compatible
         # features and fixes of fabric v1.4.2.
-        V1_4_2: true
+        V2_0: true
 
 Application: &ApplicationDefaults
 

@@ -32,7 +32,7 @@ Capabilities:
         # prior releases.
         # Prior to enabling V1.4.3 channel capabilities, ensure that all
         # orderers and peers on a channel are at v1.3.0 or later.
-        V1_4_3: true
+        V2_0: true
     # Orderer capabilities apply only to the orderers, and may be safely
     # used with prior release peers.
     # Set the value of the capability to true to require it.
@@ -42,7 +42,7 @@ Capabilities:
         # level, but which would be incompatible with orderers from prior releases.
         # Prior to enabling V1.4.2 orderer capabilities, ensure that all
         # orderers on a channel are at v1.4.2 or later.
-        V1_4_2: true
+        V2_0: true
 
     # Application capabilities apply only to the peer network, and may be safely
     # used with prior release orderers.
@@ -50,7 +50,7 @@ Capabilities:
     Application: &ApplicationCapabilities
         # V1.4.2 for Application enables the new non-backwards compatible
         # features and fixes of fabric v1.4.2.
-        V1_4_2: true"
+        V2_0: true"
 }
 
 function printOrdererDefaults() {
@@ -110,6 +110,12 @@ Orderer: &OrdererDefaults
         Admins:
             Type: ImplicitMeta
             Rule: \"MAJORITY Admins\"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: \"MAJORITY Endorsement\"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: \"MAJORITY Endorsement\"        
         # BlockValidation specifies what signatures must be included in the block
         # from the orderer for the peer to validate it.
         BlockValidation:

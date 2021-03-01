@@ -98,8 +98,8 @@ mkdir -p $outputPath
 } > $outputPath/metadata.output
 
 collectHlfNodesLogs
-collectNginxLogs
-collectIngressLogs
+#collectNginxLogs
+#collectIngressLogs
 
-zip -r $zipFileName output/
+#zip -r $zipFileName output/
 echo "Logs are stored at path: $(pwd)/$zipFileName"

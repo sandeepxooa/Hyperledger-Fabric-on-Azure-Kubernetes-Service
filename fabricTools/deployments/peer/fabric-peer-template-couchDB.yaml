@@ -44,7 +44,7 @@ spec:
            name: fabric-storage
            subPath: peer{nodeNum}-couchdb
       - name: peer{nodeNum}
-        image: hyperledger/fabric-peer:1.4.8
+        image: hyperledger/fabric-peer:2.3.1
         env:
         - name: CORE_LEDGER_STATE_STATEDATABASE
           value: "CouchDB"
@@ -100,7 +100,7 @@ spec:
         - name: CORE_PEER_LOCALMSPID
           value: {orgName}
         - name: CORE_CHAINCODE_BUILDER
-          value: hyperledger/fabric-ccenv:1.4.8
+          value: hyperledger/fabric-ccenv:2.3.1
         - name: CORE_CHAINCODE_GOLANG_RUNTIME
           value: hyperledger/fabric-baseos:amd64-0.4.21
         - name: CORE_CHAINCODE_NODE_RUNTIME

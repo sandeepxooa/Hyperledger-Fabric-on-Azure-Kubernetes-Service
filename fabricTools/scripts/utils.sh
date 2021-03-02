@@ -109,13 +109,13 @@ Orderer: &OrdererDefaults
             Rule: \"ANY Writers\"
         Admins:
             Type: ImplicitMeta
-            Rule: \"MAJORITY Admins\"
+            Rule: \"ANY Admins\"
         LifecycleEndorsement:
             Type: ImplicitMeta
-            Rule: \"MAJORITY Endorsement\"
+            Rule: \"ANY Endorsement\"
         Endorsement:
             Type: ImplicitMeta
-            Rule: \"MAJORITY Endorsement\"        
+            Rule: \"ANY Endorsement\"        
         # BlockValidation specifies what signatures must be included in the block
         # from the orderer for the peer to validate it.
         BlockValidation:
@@ -159,7 +159,15 @@ function printOrg {
             Rule: \"OR('${ORG_MSP_ID}.member')\"
         Admins:
             Type: Signature
-            Rule: \"OR('${ORG_MSP_ID}.admin')\" "
+            Rule: \"OR('${ORG_MSP_ID}.admin')\"\"
+        LifecycleEndorsement:
+            Type: Signature
+            Rule: \"OR('${ORG_MSP_ID}.admin')\"\"
+        Endorsement:
+            Type: Signature
+            Rule: \"OR('${ORG_MSP_ID}.admin')\" "        
+
+                
 }
 
 # printOrdererOrg <ORG>
@@ -241,6 +249,12 @@ Application: &ApplicationDefaults
         Admins:
             Type: ImplicitMeta
             Rule: \"MAJORITY Admins\"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: \"ANY Admins\"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: \"ANY Admins\"        
 
     Capabilities:
         <<: *ApplicationCapabilities
@@ -273,6 +287,12 @@ Channel: &ChannelDefaults
         Admins:
             Type: ImplicitMeta
             Rule: \"MAJORITY Admins\"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: \"ANY Admins\"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: \"ANY Admins\"        
 
     # Capabilities describes the channel level capabilities, see the
     # dedicated Capabilities section elsewhere in this file for a full

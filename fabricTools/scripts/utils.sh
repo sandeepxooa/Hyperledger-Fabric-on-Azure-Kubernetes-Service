@@ -159,15 +159,13 @@ function printOrg {
             Rule: \"OR('${ORG_MSP_ID}.member')\"
         Admins:
             Type: Signature
-            Rule: \"OR('${ORG_MSP_ID}.admin')\"\"
+            Rule: \"OR('${ORG_MSP_ID}.member')\"
         LifecycleEndorsement:
             Type: Signature
-            Rule: \"OR('${ORG_MSP_ID}.admin')\"\"
+            Rule: \"OR('${ORG_MSP_ID}.member')\"
         Endorsement:
             Type: Signature
             Rule: \"OR('${ORG_MSP_ID}.admin')\" "        
-
-                
 }
 
 # printOrdererOrg <ORG>

@@ -62,7 +62,7 @@ spec:
       - name: fabric-tools-secrets
       containers:
       - name: orderer
-        image: hyperledger/fabric-orderer:2.3.1
+        image: hyperledger/fabric-orderer:2.2.3
         command: ["sh", "-c", "orderer"]
         env:
         - name: ORDERER_GENERAL_LEDGERTYPE

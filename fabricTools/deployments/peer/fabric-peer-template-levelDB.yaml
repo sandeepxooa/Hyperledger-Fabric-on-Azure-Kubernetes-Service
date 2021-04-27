@@ -36,7 +36,7 @@ spec:
         - name: fabric-tools-secrets
       containers:
         - name: peer{nodeNum}
-          image: hyperledger/fabric-peer:2.2.3
+          image: hyperledger/fabric-peer:2.3
           env:
             - name: CORE_VM_ENDPOINT
               value: "unix:///host/var/run/docker.sock"
@@ -84,7 +84,17 @@ spec:
             - name: CORE_PEER_ADDRESSAUTODETECT
               value: "true"
             - name: CORE_PEER_LOCALMSPID
-              value: { orgName }
+              value: {orgName}
+            - name: CORE_CHAINCODE_BUILDER
+              value: hyperledger/fabric-ccenv:2.3
+            - name: CORE_CHAINCODE_GOLANG_RUNTIME
+              value: hyperledger/fabric-baseos:2.3
+            - name: CORE_CHAINCODE_NODE_RUNTIME
+              value: hyperledger/fabric-nodeenv:2.3
+            - name: CORE_CHAINCODE_CAR_RUNTIME
+              value: ""
+            - name: CORE_CHAINCODE_JAVA_RUNTIME
+              value: hyperledger/fabric-javaenv:2.3   
             - name: CORE_OPERATIONS_LISTENADDRESS
               value: :8443
             - name: CORE_METRICS_PROVIDER

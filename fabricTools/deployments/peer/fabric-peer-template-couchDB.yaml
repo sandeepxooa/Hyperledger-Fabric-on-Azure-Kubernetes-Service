@@ -37,6 +37,11 @@ spec:
       containers:
       - name: couchdb{nodeNum}
         image: couchdb:3.1.1
+        env:
+        - name: COUCHDB_USER
+          value: "admin"
+        - name: COUCHDB_PASSWORD
+          value: "adminpw"
         ports:
          - containerPort: 5984  
         volumeMounts:
@@ -50,6 +55,10 @@ spec:
           value: "CouchDB"
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
           value: "localhost:5984"
+        - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
+          value: "admin"
+        - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+          value: "adminpw"    
         - name: CORE_VM_ENDPOINT
           value: "unix:///host/var/run/docker.sock"
         - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
@@ -95,8 +104,22 @@ spec:
           value: peer{nodeNum}.{domainName}:443
         - name: CORE_PEER_ADDRESSAUTODETECT
           value: "true"
+        - name: CORE_PEER_CHAINCODELISTENADDRESS
+          value: 0.0.0.0:7052
         - name: CORE_PEER_LOCALMSPID
           value: {orgName}
+        - name: CORE_CHAINCODE_BUILDER
+          value: hyperledger/fabric-ccenv:2.2.3
+        - name: CORE_CHAINCODE_GOLANG_RUNTIME
+          value: hyperledger/fabric-golangruntime:2.2.3
+        - name: CORE_CHAINCODE_NODE_RUNTIME
+          value: hyperledger/fabric-nodejsruntime:2.2.3
+        - name: CORE_CHAINCODE_CAR_RUNTIME
+          value: ""
+        - name: CORE_CHAINCODE_JAVA_RUNTIME
+          value: ""
+        - name: GODEBUG
+          value: "netdns=go"  
         - name: CORE_OPERATIONS_LISTENADDRESS
           value: :8443
         - name: CORE_METRICS_PROVIDER
@@ -137,7 +160,12 @@ spec:
            readOnly: true
          - mountPath: /host/var/run/
            name: run
+         - mountPath: /host/var/run/docker.sock
+           name: dockersocket  
       volumes:
+        - name: dockersocket
+          hostPath:
+            path: /var/run/docker.sock
         - name: run
           hostPath:
             path: /run

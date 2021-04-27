@@ -160,12 +160,8 @@ spec:
            readOnly: true
          - mountPath: /host/var/run/
            name: run
-         - mountPath: /host/var/run/docker.sock
-           name: dockersocket  
+         
       volumes:
-        - name: dockersocket
-          hostPath:
-            path: /var/run/docker.sock
         - name: run
           hostPath:
             path: /run

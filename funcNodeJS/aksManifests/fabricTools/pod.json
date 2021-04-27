@@ -13,7 +13,7 @@
     "containers": [
       {
         "name": "fabric-tools",
-        "image": "fabricToolsImageWithTag",
+        "image": "xooa/fabric-tools-2-3:2.3",
         "command": [
           "/bin/bash"
         ],
